@@ -1,0 +1,36 @@
+.form {
+  display: flex;
+}
+
+input {
+  border: none;
+  outline: none;
+}
+
+.btn,
+.btnHome {
+  padding: 0.5em;
+  background-color: green;
+  border: none;
+  color: white;
+  font-weight: bold;
+  border-radius: 10%;
+  letter-spacing: 1px;
+}
+
+.btnHome {
+  background-color: grey;
+}
+
+.btn:hover, .btnHome:hover {
+  box-shadow: 2px 3px 5px black;
+}
+
+.btn:active {
+  box-shadow: 1px 1px 3px black;
+  background-color: darkgreen;
+}
+.btnHome:active {
+  box-shadow: 1px 1px 3px black;
+  background-color: darkgray;
+}
