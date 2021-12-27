@@ -1,7 +1,8 @@
 import React, {useState} from "react";
+import {Link} from 'react-router-dom'
 import Search from "./SearchForm.module.css"
 
-const SearchForm = ({ filterPokemon, inputChangeHandler }) => {
+const SearchForm = ({ filterPokemon }) => {
   const [input, setInput] = useState("");
 
   const onInputChange = (e) => {
@@ -31,7 +32,7 @@ const SearchForm = ({ filterPokemon, inputChangeHandler }) => {
         onChange={onInputChange}
       />
       <button className={Search.btn} type="submit" onClick={submitForm}>Search</button>
-      <button className={Search.btnHome} type="button" onClick={resetForm}>Home</button>
+      <button className={Search.btnHome} type="button" onClick={resetForm}><Link to="/">Home</Link></button>
     </form>
   );
 };

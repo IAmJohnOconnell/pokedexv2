@@ -1,20 +1,40 @@
 import React, { useState, useEffect } from "react";
 import Card from "./PokemonCard.module.css";
-import grassEnergy from "../assets/grassEnergy.png"
-import fireEnergy from "../assets/fireEnergy.png"
-import waterEnergy from "../assets/waterEnergy.png"
-import electricEnergy from "../assets/electricEnergy.png"
-import dragonEnergy from "../assets/dragonEnergy.png"
-import colorlessEnergy from "../assets/colorlessEnergy.png"
-import darkEnergy from "../assets/darkEnergy.png"
-import fightingEnergy from "../assets/fightingEnergy.png"
-import psychicEnergy from "../assets/psychicEnergy.png"
-import steelEnergy from "../assets/steelEnergy.png"
+import grass from "../assets/grassEnergy.png"
+import fire from "../assets/fireEnergy.png"
+import water from "../assets/waterEnergy.png"
+import electric from "../assets/electricEnergy.png"
+import dragon from "../assets/dragonEnergy.png"
+import colorless from "../assets/colorlessEnergy.png"
+import dark from "../assets/darkEnergy.png"
+import fighting from "../assets/fightingEnergy.png"
+import psychic from "../assets/psychicEnergy.png"
+import steel from "../assets/steelEnergy.png"
 
-const PokemonCardInfo = ({ pokemon, isFlipped, setIsFlipped }) => {
+const imageMap = {
+  grass: grass,
+  bug: grass,
+  fire: fire,
+  water: water,
+  electric: electric,
+  dragon: dragon,
+  colorless: colorless,
+  normal: colorless,
+  fairy: colorless,
+  dark: dark,
+  fighting: fighting,
+  ground: fighting,
+  rock: fighting,
+  psychic: psychic,
+  ghost: psychic,
+  ice: psychic,
+  poison: psychic,
+  steel: steel
+}
+
+const PokemonDetail = ({ pokemon, isFlipped, setIsFlipped }) => {
   const [randomNum, setRandomNum] = useState(0);
   const [moves, setMoves] = useState([]);
-  const [energy,setEnergy] = useState();
   const parsedMoves = [];
 
   const parseFlavorText = async () => {
@@ -49,8 +69,8 @@ const PokemonCardInfo = ({ pokemon, isFlipped, setIsFlipped }) => {
           <h1 className={Card.name}>{pokemon.name}</h1>
         </div>
         <div className={Card.hpEnergy}>
-          <h2 className={Card.hp}>120 HP</h2>
-          <img src={grassEnergy} className={Card.energy} alt="" />
+          <h2 className={Card.hp}>{pokemon.stats[0].baseStat}</h2>
+          {pokemon.energyType && <img src={imageMap[pokemon.energyType]} className={Card.energy} alt="" /> }
         </div>
       </div>
       <div className={Card.borderGradient}>
@@ -107,7 +127,7 @@ const PokemonCardInfo = ({ pokemon, isFlipped, setIsFlipped }) => {
   );
 };
 
-export default PokemonCardInfo;
+export default PokemonDetail;
 
 // const formattedPokemon = {
 // 	id: pokemon.id,

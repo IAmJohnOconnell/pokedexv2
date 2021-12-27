@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styles from "./App.module.css";
-import Container from "./components/Container";
+import Grid from "./components/Grid";
 import Hero from "./components/Hero";
+import { Routes, Route, Link } from "react-router-dom";
+import SearchForm from "./components/SearchForm";
+import PokemonCard from "./components/PokemonCard";
+import PokemonDetail from "./components/PokemonDetail";
 
 export default function App() {
   const [pokemonData, setPokemonData] = useState("");
+  const [filteredPokemon, setFilteredPokemon] = useState([]);
 
   useEffect(() => {
     getPokemon();
@@ -26,7 +31,7 @@ export default function App() {
       const pokemonFlavorText = pokemonSpecies.flavor_text_entries.map(
         (flavorText) => {
           if (flavorText.language.name === "en") {
-            return flavorText
+            return flavorText;
           }
         }
       );
@@ -34,16 +39,21 @@ export default function App() {
       const pokemonType = pokemon.types
         .map((type) => type.type.name)
         .join(", ");
+
+      const pokemonEnergyType = pokemon.types[0].type.name;
       const pokemonTypeClass = pokemon.types
         .map((type) => type.type.name)
         .join("-");
+
       const pokemonAbilities = pokemon.abilities
         .map((ability) => ability.ability.name)
         .join(", ");
+
       const pokemonStats = pokemon.stats.map((data) => ({
         statName: data.stat.name,
         baseStat: data.base_stat,
       }));
+
       const moves = pokemon.moves.slice(0, 5);
       const spriteData = Object.entries(pokemon.sprites);
       const notNull = spriteData.filter(([key, value]) => value !== null);
@@ -52,9 +62,12 @@ export default function App() {
       const formattedPokemon = {
         id: pokemon.id,
         name: pokemon.name,
+        url: `/pokemon/${id}`,
         image: `${pokemon.sprites.versions["generation-vii"]["ultra-sun-ultra-moon"].front_default}`,
         type: pokemonType,
         typeClass: pokemonTypeClass,
+        energyType: pokemonEnergyType,
+        energyClass: `../assets/${pokemonEnergyType}Energy.png`,
         abilities: pokemonAbilities,
         flavorTextEntries: pokemonFlavorText,
         stats: pokemonStats,
@@ -69,10 +82,44 @@ export default function App() {
     setPokemonData(pokemons);
   };
 
+  const filterPokemon = async (input) => {
+    try {
+      let filteredArr = await pokemonData.filter((pokemon) => {
+        return pokemon.name.includes(input);
+      });
+      setFilteredPokemon(filteredArr);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <div className={styles.App}>
       <Hero />
-      <Container pokemonData={pokemonData} />
+      <SearchForm filterPokemon={filterPokemon} />
+      <Grid pokemonData={pokemonData} filteredPokemon={filteredPokemon} />
+      {/* <Routes>
+        <Route
+          path="/"
+          element={
+            <Grid pokemonData={pokemonData} filteredPokemon={filteredPokemon} />
+          }
+        />
+        <Route
+          path="search"
+          element={<SearchForm filterPokemon={filterPokemon} />}
+        />
+        <Route
+          path="pokemon"
+          element={
+            <Grid pokemonData={pokemonData} filteredPokemon={filteredPokemon} />
+          }
+        >
+          <Route path="pokemon/:pokemonId" element={PokemonCard} >
+
+          </Route>
+        </Route>
+      </Routes> */}
     </div>
   );
 }
