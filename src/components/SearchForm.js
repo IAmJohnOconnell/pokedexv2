@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {Link} from 'react-router-dom'
-import Search from "./SearchForm.module.css"
+import Search from "./styles/SearchForm.module.css"
 
 const SearchForm = ({ filterPokemon }) => {
   const [input, setInput] = useState("");
