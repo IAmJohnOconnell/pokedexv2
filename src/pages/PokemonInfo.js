@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
-import Card from "../components/styles/PokemonCard.module.css"
 import { Link, useParams } from "react-router-dom"
+import styled from "styled-components"
+import Types from "../components/styles/Types.module.css"
 //energies
 import grass from "../assets/grassEnergy.png"
 import fire from "../assets/fireEnergy.png"
@@ -13,6 +14,137 @@ import fighting from "../assets/fightingEnergy.png"
 import psychic from "../assets/psychicEnergy.png"
 import steel from "../assets/steelEnergy.png"
 //
+
+const StyledLink = styled(Link)`
+	color: black;
+	text-decoration: none;
+`
+const Card = styled.div`
+	text-align: center;
+	border: 1em solid #f3d34b;
+	border-radius: 5px;
+	cursor: pointer;
+	box-shadow: 0 0px 40px 2px rgba(0, 0, 0, 0.4);
+	display: flex;
+	flex-direction: column;
+	text-transform: capitalize;
+	justify-content: center;
+	align-items: center;
+	margin: 2em auto;
+	padding: 0.5em;
+	font-family: monospace;
+	max-width: 50vw;
+`
+const CardHeader = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: space-evenly;
+	max-width: 90%;
+	margin: 0 auto;
+	margin-top: 0.5em;
+`
+const CardHeaderLeft = styled.div`
+	display: flex;
+	flex-direction: column;
+`
+const Stage = styled.sub`
+	font-weight: bold;
+	margin-right: auto;
+`
+const Name = styled.h1`
+	margin: 0;
+	font-family: monospace;
+`
+const HPEnergy = styled.div`
+	display: flex;
+	flex-direction: row;
+	/* justify-content: center; */
+	margin-left: auto;
+	align-items: center;
+	gap: 0.5em;
+	padding: 0;
+`
+const HP = styled.h2`
+	color: #ab2a31;
+	font-weight: bold;
+	margin: 0;
+`
+const Energy = styled.img`
+	max-height: 20px;
+	max-width: 20px;
+`
+const BorderGradientContainer = styled.div`
+	border: 4px solid;
+	max-width: 90%;
+	margin: 0 auto;
+	border-image-slice: 1;
+	border-image-source: linear-gradient(to left, #7f6720, #d9c877);
+	margin-bottom: 0.4em;
+`
+const TextSummaryContainer = styled(BorderGradientContainer)`
+	padding: 1em;
+`
+
+const Banner = styled.div`
+	display: flex;
+	flex-direction: row;
+	background: rgb(127, 103, 32);
+	background: linear-gradient(
+		133deg,
+		#7f6720 0%,
+		#d9c877 50%,
+		rgba(127, 103, 32, 1) 100%
+	);
+	font-size: 0.6em;
+	letter-spacing: 1px;
+	border-radius: 0.4em;
+	height: 2em;
+	font-family: "Times New Roman", Times, serif, Helvetica, sans-serif;
+	align-items: center;
+	justify-content: center;
+	max-width: 90%;
+	margin: 0 auto;
+`
+const Label = styled.p`
+	display: flex;
+	font-weight: bold;
+	border-bottom: 1px solid;
+	border-image-slice: 1;
+	border-image-source: linear-gradient(to left, #7f6720, #d9c877);
+	padding: 0.5em 0;
+`
+const Stats = styled.div`
+	display: grid;
+	font-size: 1.1em;
+	grid-template-columns: repeat(3, 1fr);
+	align-items: center;
+	justify-content: space-between;
+	align-content: center;
+`
+const Moves = Stats
+
+const StatName = styled.p`
+	font-weight: bold;
+`
+const MoveName = styled.p`
+	font-weight: bold;
+`
+const TextSummary = styled.div`
+	background: none;
+	text-decoration: inherit;
+	font-size: 1rem;
+`
+const CatalogNumber = styled.div`
+	display: flex;
+	justify-content: flex-end;
+	font-size: 0.8em;
+	font-weight: bold;
+
+	& p {
+		margin: 0;
+		padding-top: 1em;
+	}
+`
 
 const PokemonInfo = ({ pokemonData }) => {
 	const [randomNum, setRandomNum] = useState(0)
@@ -76,88 +208,78 @@ const PokemonInfo = ({ pokemonData }) => {
 
 	return (
 		<>
-			<h1>PokemonSpecific Page</h1>
-
 			{pokemon && (
-				<div className={`${Card.card} ${Card[pokemon.typeClass]}`}>
-					<Link to={"/pokedex"}>
-						<div className={Card.header}>
-							<div className={Card.headerLeft}>
-								<sub className={Card.stage}>Basic Pokemon</sub>
-								<h1 className={Card.name}>{pokemon.name}</h1>
-								<h1 className={Card.name}>{id}</h1>
-							</div>
-							<div className={Card.hpEnergy}>
-								<h2 className={Card.hp}>
-									{pokemon.stats[0].baseStat}
-								</h2>
+				<Card className={Types[pokemon.typeClass]}>
+					<StyledLink to={"/"}>
+						<CardHeader>
+							<CardHeaderLeft>
+								<Stage>Basic Pokemon</Stage>
+								<Name>{pokemon.name}</Name>
+								{/* <Name>{pokemon.id}</Name> */}
+							</CardHeaderLeft>
+							<HPEnergy>
+								<HP>{pokemon.stats[0].baseStat}</HP>
 								{pokemon.energyType && (
-									<img
+									<Energy
 										src={imageMap[pokemon.energyType]}
-										className={Card.energy}
 										alt=''
 									/>
 								)}
-							</div>
-						</div>
-						<div className={Card.borderGradient}>
+							</HPEnergy>
+						</CardHeader>
+						<BorderGradientContainer>
 							<img src={pokemon.image} alt='' />
-						</div>
-						<div className={Card.banner}>
+						</BorderGradientContainer>
+						<Banner>
 							<p>
 								{pokemon.type} Pokemon. Height: {pokemon.height}
 								, Weight: {pokemon.weight}
 							</p>
-						</div>
+						</Banner>
 						<div>
-							<p className={Card.label}>Abilities</p>
+							<Label>Abilities</Label>
 						</div>
 						<div>
 							<p>{pokemon.abilities}</p>
 						</div>
 						<div>
-							<p className={Card.label}>Stats</p>
+							<Label>Stats</Label>
 						</div>
-						<div className={Card.stats}>
+						<Stats>
 							{pokemon.stats.map(stat => {
 								return (
-									<div className='stat' key={stat.statName}>
-										<p className={Card.statName}>
-											{stat.statName}:
-										</p>
+									<div key={stat.statName}>
+										<StatName>{stat.statName}:</StatName>
 										<p>{stat.baseStat}</p>
 									</div>
 								)
 							})}
-						</div>
+						</Stats>
 						<div>
-							<p className={Card.label}>Moves</p>
+							<Label>Moves</Label>
 						</div>
-						<div className={Card.moves}>
+						<Moves>
 							{moves &&
 								moves.map(move => {
 									return (
-										<div className='move' key={move.name}>
-											<p className={Card.moveName}>
-												{move}
-											</p>
+										<div key={move.name}>
+											<MoveName>{move}</MoveName>
 										</div>
 									)
 								})}
-						</div>
-						<div className={Card.textSummary}>
-							<p
-								className={`${Card.borderGradient} ${Card.flavorText}`}>
+						</Moves>
+						<TextSummary>
+							<TextSummaryContainer>
 								{pokemon.flavorTextEntries[randomNum] &&
 									pokemon.flavorTextEntries[randomNum]
 										.flavor_text}
-							</p>
-						</div>
-						<div className={Card.catalogNumber}>
+							</TextSummaryContainer>
+						</TextSummary>
+						<CatalogNumber>
 							<p>{pokemon.id}/151</p>
-						</div>
-					</Link>
-				</div>
+						</CatalogNumber>
+					</StyledLink>
+				</Card>
 			)}
 		</>
 	)
