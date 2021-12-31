@@ -3,11 +3,13 @@ import { Link } from "react-router-dom"
 import Search from "./styles/SearchForm.module.css"
 import styled from "styled-components"
 
+const StyledLink = styled(Link)`
+color: white;
+text-decoration: none;
+`
+
 const SearchForm = ({ filterPokemon }) => {
-	const StyledLink = styled(Link)`
-		color: white;
-		text-decoration: none;
-	`
+
 
 	const [input, setInput] = useState("")
 

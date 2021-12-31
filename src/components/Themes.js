@@ -20,5 +20,22 @@ html {
   height: 100%;
   display: flex
   justify-content: center
+  color: ${props => props.theme.color}
+
+  & a {
+    color: ${props => props.theme.color}
+  }
+
+  & a:visited {
+    color: ${props => props.theme.color}
+  }
+  
+  & a:link {
+    color: ${props => props.theme.color}
+  }
+}
+
+body {
+  color: ${props => props.theme.color};
 }
 `

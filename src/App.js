@@ -5,19 +5,21 @@ import PokeDex from "./pages/PokeDex"
 import PokemonInfo from "./pages/PokemonInfo"
 import Navigation from "./components/Navigation"
 import Hero from "./components/Hero"
+import Switch from "./components/Switch"
 import axios from "axios"
-import { createGlobalStyle, ThemeProvider } from "styled-components"
+import { ThemeProvider } from "styled-components"
 import {lightTheme, darkTheme} from "./components/Themes"
 import { GlobalStyle } from "./components/Themes"
 
 
 
 export default function App() {
-	const [theme, setTheme] = useState("dark")
+	const [theme, setTheme] = useState("light")
 	const [pokemonData, setPokemonData] = useState("")
 
 	const themeToggler = () => {
 		theme === "light" ? setTheme("dark") : setTheme("light")
+		console.log("clicked")
 	}
 
 	const getPokemon = async () => {
@@ -92,6 +94,8 @@ export default function App() {
 		getPokemon()
 	}, [])
 
+	
+
 	return (
 		<ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
 			<div>
@@ -99,6 +103,7 @@ export default function App() {
 					<GlobalStyle />
 					<Hero />
 					<Navigation />
+					<Switch themeToggler={themeToggler}/>
 					<Routes>
 						<Route
 							path='/'

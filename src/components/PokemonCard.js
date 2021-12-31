@@ -41,12 +41,11 @@ const Card = styled.div`
 `
 
 const Name = styled.h2`
-	color: white;
 	font-family: sans-serif;
 `
 
 const StyledLink = styled(Link)`
-	color: black;
+	link-style: none;
 	text-decoration: none;
 `
 

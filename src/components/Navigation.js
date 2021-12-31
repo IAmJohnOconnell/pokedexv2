@@ -1,7 +1,6 @@
 import React from "react"
 import { Link } from "react-router-dom"
 import styled from "styled-components"
-import Switch from "./Switch"
 
 const Nav = styled.nav`
 display: flex;
@@ -31,7 +30,6 @@ const Navigation = () => {
 				<StyledLink to={"/about"}>About</StyledLink>
 			</li>
 			<li>
-				<Switch />
 			</li>
 		</Nav>
 	)

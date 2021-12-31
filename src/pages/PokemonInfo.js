@@ -177,7 +177,7 @@ const PokemonInfo = ({ pokemonData }) => {
 	const parseFlavorText = async () => {
 		try {
 			await pokemon.flavorTextEntries.filter(entry => {
-				Object.keys(pokemon.flavorTextEntries).forEach(key =>
+				return Object.keys(pokemon.flavorTextEntries).forEach(key =>
 					pokemon.flavorTextEntries[key] === undefined
 						? delete pokemon.flavorTextEntries[key]
 						: {}
