@@ -6,21 +6,19 @@ import PokemonInfo from "./pages/PokemonInfo"
 import Navigation from "./components/Navigation"
 import Hero from "./components/Hero"
 import axios from "axios"
-import { createGlobalStyle } from "styled-components"
+import { createGlobalStyle, ThemeProvider } from "styled-components"
+import {lightTheme, darkTheme} from "./components/Themes"
+import { GlobalStyle } from "./components/Themes"
+
+
 
 export default function App() {
-	const GlobalStyle = createGlobalStyle`
-  html {
-    background-color: #fff;
-    background-size: contain;
-    width: 100%;
-    height: 100%;
-    display: flex
-    justify-content: center
-  }
-  `
-
+	const [theme, setTheme] = useState("dark")
 	const [pokemonData, setPokemonData] = useState("")
+
+	const themeToggler = () => {
+		theme === "light" ? setTheme("dark") : setTheme("light")
+	}
 
 	const getPokemon = async () => {
 		const origional = 151
@@ -95,26 +93,31 @@ export default function App() {
 	}, [])
 
 	return (
-		<div>
-			<Router>
-				<GlobalStyle />
-				<Hero />
-				<Navigation />
-				<Routes>
-					<Route path='/' element={
-							<PokeDex
-								pokemonData={pokemonData}
-								getPokemon={getPokemon}
-							/>
-						} />
-					<Route path='/about' element={<About />} />
-				
-					<Route
-						path='/pokemon/:id'
-						element={<PokemonInfo pokemonData={pokemonData} />}
-					/>
-				</Routes>
-			</Router>
-		</div>
+		<ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
+			<div>
+				<Router>
+					<GlobalStyle />
+					<Hero />
+					<Navigation />
+					<Routes>
+						<Route
+							path='/'
+							element={
+								<PokeDex
+									pokemonData={pokemonData}
+									getPokemon={getPokemon}
+								/>
+							}
+						/>
+						<Route path='/about' element={<About />} />
+
+						<Route
+							path='/pokemon/:id'
+							element={<PokemonInfo pokemonData={pokemonData} />}
+						/>
+					</Routes>
+				</Router>
+			</div>
+		</ThemeProvider>
 	)
 }
