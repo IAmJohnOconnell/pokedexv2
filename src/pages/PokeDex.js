@@ -22,8 +22,6 @@ const PokeDex = ({ getPokemon, pokemonData }) => {
 	}
 	return (
 		<>
-			<h1>This is a PokeDex Page</h1>
-
 			<SearchForm filterPokemon={filterPokemon} />
 
 			<div className={GridStyles.container}>

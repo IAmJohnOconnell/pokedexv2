@@ -1,22 +1,70 @@
 import React from "react"
-import Card from "./styles/PokemonCard.module.css"
+import Types from "./styles/Types.module.css"
 import { Link } from "react-router-dom"
+import styled from "styled-components"
+
+const Card = styled.div`
+	text-align: center;
+	border-radius: 10px;
+	cursor: pointer;
+	box-shadow: 0 0px 20px 2px rgba(0, 0, 0, 0.4);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	padding: 0.5em;
+	font-family: monospace;
+	height: 400px & header {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin: 0 auto;
+	}
+
+	& span {
+		font-weight: bold;
+		font-size: 1rem;
+		color: white;
+		border-radius: 2rem;
+		padding: 0.4em;
+	}
+
+	& div {
+		margin: 0 auto;
+	}
+
+	& img {
+		height:128px;
+		width:128px;
+	}
+`
+
+const Name = styled.h2`
+	color: white;
+	font-family: sans-serif;
+`
+
+const StyledLink = styled(Link)`
+	color: black;
+	text-decoration: none;
+`
 
 const PokemonCard = ({ pokemon }) => {
 	return (
-		<div className={`${Card.card} ${Card[pokemon.typeClass]}`}>
-			<Link to={`/pokemon/${pokemon.id}`}>
+		<StyledLink to={`/pokemon/${pokemon.id}`}>
+			<Card className={Types[pokemon.energyType]}>
 				<div>
-					<div className={Card.header}>
-						<span className={Card.id}>{pokemon.id}</span>
-						<h2 className={Card.pokemonName}>{pokemon.name}</h2>
-					</div>
+					<header>
+						<span>#{pokemon.id}</span>
+						<Name>{pokemon.name}</Name>
+					</header>
 					<div>
 						<img src={pokemon.image} alt='' />
 					</div>
 				</div>
-			</Link>
-		</div>
+			</Card>
+		</StyledLink>
 	)
 }
 

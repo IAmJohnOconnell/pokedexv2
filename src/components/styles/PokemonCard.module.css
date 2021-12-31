@@ -20,7 +20,7 @@
 }
 
 .card {
-  text-align: center;
+  /* text-align: center;
   border: 1em solid #f3d34b;
   border-radius: 5px;
   cursor: pointer;
@@ -29,38 +29,38 @@
   flex-direction: column;
   text-transform: capitalize;
   padding: 0.5em;
-  font-family: monospace;
+  font-family: monospace; */
 
 }
 
 .header {
-  display: flex;
+  /* display: flex;
   align-items: center;
   justify-content: space-evenly;
   max-width: 90%;
   margin: 0 auto;
-  margin-top: .5em;
+  margin-top: .5em; */
 }
 
 .headerLeft {
-  display: flex;
-  flex-direction: column;
+  /* display: flex;
+  flex-direction: column; */
 }
 
 .stage {
-  font-weight: bold;
-  margin-right: auto;
+  /* font-weight: bold;
+  margin-right: auto; */
 }
 
 .name {
-  margin: 0;
-  font-family: monospace;
+  /* margin: 0;
+  font-family: monospace; */
 }
 
 .hp {
-  color: #ab2a31;
+  /* color: #ab2a31;
   font-weight: bold;
-  margin: 0;
+  margin: 0; */
 }
 
 .id {
@@ -73,12 +73,12 @@
 }
 
 .label {
-  display: flex;
+  /* display: flex;
   font-weight: bold;
   border-bottom: 1px solid;
   border-image-slice: 1;
   border-image-source: linear-gradient(to left, #7f6720, #d9c877);
-  padding-bottom: .3em;
+  padding-bottom: .3em; */
 }
 
 .energy{
@@ -88,7 +88,7 @@
 
 
 .banner {
-  display: flex;
+  /* display: flex;
   flex-direction: row;
   background: rgb(127, 103, 32);
   background: linear-gradient(
@@ -105,16 +105,16 @@
   align-items: center;
   justify-content: center;
   max-width: 90%;
-  margin: 0 auto;
+  margin: 0 auto; */
 }
 
 .stats, .moves {
-  display: grid;
+  /* display: grid;
   font-size: 1.2em;
   grid-template-columns: repeat(3, 1fr);
   align-items: center;
   justify-content: space-between;
-  /* align-content: center; */
+  align-content: center; */
 }
 
 .statName {
@@ -122,7 +122,7 @@
 }
 
 .hpEnergy {
-  display: flex;
+  /* display: flex;
   flex-direction: row;
   /* justify-content: center; */
   margin-left: auto;
@@ -133,9 +133,9 @@
 }
 
 .textSummary {
-  background: none;
+  /* background: none;
   text-decoration: inherit;
-  font-size: 1rem;
+  font-size: 1rem; */
 }
 
 .flavorText {
@@ -152,15 +152,15 @@
 }
 
 .catalogNumber {
-  display: flex;
+  /* display: flex;
   justify-content: flex-end;
   font-size: .8em;
-  font-weight: bold;
+  font-weight: bold; */
 }
 
 .catalogNumber p {
-  margin: 0;
-  padding-top: 1em;
+  /* margin: 0;
+  padding-top: 1em; */
 }
 
 .card:hover {

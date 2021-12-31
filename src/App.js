@@ -1,15 +1,24 @@
-import React, {useEffect, useState} from "react"
-import styles from "./App.module.css"
-import { BrowserRouter as Router, Routes, Route} from "react-router-dom"
-import Home from "./pages/Home"
+import React, { useEffect, useState } from "react"
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import About from "./pages/About"
 import PokeDex from "./pages/PokeDex"
 import PokemonInfo from "./pages/PokemonInfo"
 import Navigation from "./components/Navigation"
 import Hero from "./components/Hero"
 import axios from "axios"
+import { createGlobalStyle } from "styled-components"
 
 export default function App() {
+	const GlobalStyle = createGlobalStyle`
+  html {
+    background-color: #fff;
+    background-size: contain;
+    width: 100%;
+    height: 100%;
+    display: flex
+    justify-content: center
+  }
+  `
 
 	const [pokemonData, setPokemonData] = useState("")
 
@@ -62,7 +71,7 @@ export default function App() {
 				id: pokemon.id,
 				name: pokemon.name,
 				url: `/pokemon/${id}`,
-				image: `${pokemon.sprites.versions["generation-vii"]["ultra-sun-ultra-moon"].front_default}`,
+				image: `${pokemon.sprites.other["dream_world"].front_default}`,
 				type: pokemonType,
 				typeClass: pokemonTypeClass,
 				energyType: pokemonEnergyType,
@@ -86,15 +95,24 @@ export default function App() {
 	}, [])
 
 	return (
-		<div className={styles.App}>
+		<div>
 			<Router>
-        <Hero />
-        <Navigation />
+				<GlobalStyle />
+				<Hero />
+				<Navigation />
 				<Routes>
-					<Route path='/' element={<Home />} />
+					<Route path='/' element={
+							<PokeDex
+								pokemonData={pokemonData}
+								getPokemon={getPokemon}
+							/>
+						} />
 					<Route path='/about' element={<About />} />
-					<Route path='/pokedex' element={<PokeDex pokemonData={pokemonData}  getPokemon={getPokemon} />} />
-					<Route path='/pokemon/:id' element={<PokemonInfo pokemonData={pokemonData} />} />
+				
+					<Route
+						path='/pokemon/:id'
+						element={<PokemonInfo pokemonData={pokemonData} />}
+					/>
 				</Routes>
 			</Router>
 		</div>
