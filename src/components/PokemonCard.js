@@ -7,15 +7,31 @@ const Card = styled.div`
 	text-align: center;
 	border-radius: 10px;
 	cursor: pointer;
-	box-shadow: 0 0px 20px 2px rgba(0, 0, 0, 0.4);
+	box-shadow: 2px 4px 6px 2px rgba(0, 0, 0, 0.4);
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	text-transform: capitalize;
 	padding: 0.5em;
-	font-family: monospace;
-	height: 400px & header {
+	transition: all 0.2s ease-in-out;
+
+	&:hover {
+		box-shadow: 2px 4px 6px 2px rgba(0, 0, 0, 0.2);
+		transform: scale3d(1.02, 1.02, 1.02);
+		transform: translateY(-2%);
+		transition: all 0.2s ease-in-out;
+
+
+
+		& img {
+			transform:scale3d(1.2,1.2,1.2);
+			transition: all 0.25s ease-in-out;
+
+		}
+	}
+
+	& header {
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -25,9 +41,9 @@ const Card = styled.div`
 	& span {
 		font-weight: bold;
 		font-size: 1rem;
-		color: white;
 		border-radius: 2rem;
 		padding: 0.4em;
+		transition: all 0.2s ease-in-out;
 	}
 
 	& div {
@@ -35,8 +51,11 @@ const Card = styled.div`
 	}
 
 	& img {
-		height:128px;
-		width:128px;
+		height: 128px;
+		width: 128px;
+		padding:1rem;
+		transition: all 0.2s ease-in-out;
+
 	}
 `
 

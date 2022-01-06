@@ -3,20 +3,22 @@ import { Link } from "react-router-dom"
 import styled from "styled-components"
 
 const Nav = styled.nav`
-display: flex;
-justify-content: space-evenly;
-align-items: center;
-text-decoration: none;
-list-style: none;
-text-transform: uppercase;
-padding: 1rem;
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+	text-decoration: none;
+	margin: 0 auto;
+	list-style: none;
+	text-transform: uppercase;
+	padding: 1rem;
 `
 const StyledLink = styled(Link)`
-	color: yellow;
+	color: ${props => props.theme.color}
 	text-decoration: none;
+	font-weight: bold;
 
 	:hover {
-		color: red
+		color: #ffe202
 	}
 `
 
@@ -28,8 +30,6 @@ const Navigation = () => {
 			</li>
 			<li>
 				<StyledLink to={"/about"}>About</StyledLink>
-			</li>
-			<li>
 			</li>
 		</Nav>
 	)

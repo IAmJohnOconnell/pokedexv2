@@ -1,17 +1,18 @@
 import React from 'react'
 import styled from "styled-components"
 
-const Container = styled.div`
-border: 3px solid #222;
-border-radius: 1rem;
-padding: 1rem;
+const StyledWrapper = styled.div`
+display: flex;
+justify-content: flex-end;
+align-items: center;
+margin-right: 5rem;
 `
 
 const Wrapper = (props) => {
     return (
-        <Container>
+        <StyledWrapper>
             {props.children}
-        </Container>
+        </StyledWrapper>
     )
 }
 

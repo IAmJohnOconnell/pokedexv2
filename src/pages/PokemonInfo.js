@@ -32,7 +32,6 @@ const Card = styled.div`
 	align-items: center;
 	margin: 2em auto;
 	padding: 0.5em;
-	font-family: monospace;
 	max-width: 50vw;
 `
 const CardHeader = styled.div`
@@ -53,7 +52,6 @@ const Stage = styled.sub`
 `
 const Name = styled.h1`
 	margin: 0;
-	font-family: monospace;
 `
 const HPEnergy = styled.div`
 	display: flex;
@@ -73,6 +71,10 @@ const Energy = styled.img`
 	max-height: 20px;
 	max-width: 20px;
 `
+const Image = styled.img`
+	max-width: auto;
+`
+
 const BorderGradientContainer = styled.div`
 	border: 4px solid;
 	max-width: 90%;
@@ -99,7 +101,6 @@ const Banner = styled.div`
 	letter-spacing: 1px;
 	border-radius: 0.4em;
 	height: 2em;
-	font-family: "Times New Roman", Times, serif, Helvetica, sans-serif;
 	align-items: center;
 	justify-content: center;
 	max-width: 90%;
@@ -228,7 +229,7 @@ const PokemonInfo = ({ pokemonData }) => {
 							</HPEnergy>
 						</CardHeader>
 						<BorderGradientContainer>
-							<img src={pokemon.image} alt='' />
+							<Image src={pokemon.image} alt='' />
 						</BorderGradientContainer>
 						<Banner>
 							<p>

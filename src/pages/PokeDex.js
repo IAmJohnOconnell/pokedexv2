@@ -1,30 +1,29 @@
-import React, { useState, useEffect } from "react"
-import SearchForm from "../components/SearchForm"
-import GridStyles from "../components/styles/Grid.module.css"
+import React, { useEffect } from "react"
 import PokemonCard from "../components/PokemonCard"
+import styled from "styled-components"
 
-const PokeDex = ({ getPokemon, pokemonData }) => {
-	const [filteredPokemon, setFilteredPokemon] = useState([])
+const  GridContainer = styled.div`
+padding: 2rem;
+max-width: 1200px;
+margin: 0 auto;
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+grid-auto-flow: row;
+gap: .8em;
+`
+
+const PokeDex = ({ getPokemon, pokemonData, filteredPokemon }) => {
 
 	useEffect(() => {
 		getPokemon()
 	}, [])
 
-	const filterPokemon = async input => {
-		try {
-			let filteredArr = await pokemonData.filter(pokemon => {
-				return pokemon.name.includes(input)
-			})
-			setFilteredPokemon(filteredArr)
-		} catch (e) {
-			console.log(e)
-		}
-	}
+
+
 	return (
 		<>
-			<SearchForm filterPokemon={filterPokemon} />
 
-			<div className={GridStyles.container}>
+			<GridContainer >
 				{pokemonData && filteredPokemon.length === 0
 					? pokemonData.map(poke => {
 							return (
@@ -40,7 +39,7 @@ const PokeDex = ({ getPokemon, pokemonData }) => {
 							)
 					  })
 					: null}
-			</div>
+			</GridContainer>
 		</>
 	)
 }

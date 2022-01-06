@@ -3,10 +3,9 @@ import styled from "styled-components"
 
 const StyledSwitch = styled.label`
 	position: relative;
-	display: inline-block;
+	display: flex;
 	width: 60px;
 	height: 34px;
-
 	& input {
 		opacity: 0;
 		width: 0;

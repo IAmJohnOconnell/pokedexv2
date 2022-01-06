@@ -4,18 +4,29 @@ import About from "./pages/About"
 import PokeDex from "./pages/PokeDex"
 import PokemonInfo from "./pages/PokemonInfo"
 import Navigation from "./components/Navigation"
+import SearchForm from "./components/SearchForm"
 import Hero from "./components/Hero"
 import Switch from "./components/Switch"
 import axios from "axios"
 import { ThemeProvider } from "styled-components"
-import {lightTheme, darkTheme} from "./components/Themes"
+import { lightTheme, darkTheme } from "./components/Themes"
 import { GlobalStyle } from "./components/Themes"
-
-
+import Wrapper from "./components/Wrapper"
 
 export default function App() {
 	const [theme, setTheme] = useState("light")
 	const [pokemonData, setPokemonData] = useState("")
+	const [filteredPokemon, setFilteredPokemon] = useState([])
+	const filterPokemon = async input => {
+		try {
+			let filteredArr = await pokemonData.filter(pokemon => {
+				return pokemon.name.includes(input)
+			})
+			setFilteredPokemon(filteredArr)
+		} catch (e) {
+			console.log(e)
+		}
+	}
 
 	const themeToggler = () => {
 		theme === "light" ? setTheme("dark") : setTheme("light")
@@ -41,6 +52,7 @@ export default function App() {
 					if (flavorText.language.name === "en") {
 						return flavorText
 					}
+					return flavorText
 				}
 			)
 
@@ -94,8 +106,6 @@ export default function App() {
 		getPokemon()
 	}, [])
 
-	
-
 	return (
 		<ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
 			<div>
@@ -103,7 +113,10 @@ export default function App() {
 					<GlobalStyle />
 					<Hero />
 					<Navigation />
-					<Switch themeToggler={themeToggler}/>
+					<SearchForm filterPokemon={filterPokemon} />
+					<Wrapper>
+						<Switch themeToggler={themeToggler} />
+					</Wrapper>
 					<Routes>
 						<Route
 							path='/'
@@ -111,6 +124,7 @@ export default function App() {
 								<PokeDex
 									pokemonData={pokemonData}
 									getPokemon={getPokemon}
+									filteredPokemon={filteredPokemon}
 								/>
 							}
 						/>
