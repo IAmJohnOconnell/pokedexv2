@@ -57,7 +57,6 @@ const SearchForm = ({ pokemonData, setFilteredPokemon }) => {
 				pokemon.name.includes(input)
 			)
 			setFilteredPokemon(filteredArr)
-			console.log(filteredArr)
 		} else {
 			setFilteredPokemon("")
 			setInput("")
