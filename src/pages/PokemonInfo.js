@@ -33,10 +33,10 @@ const Card = styled.div`
 	margin: 2em auto;
 	padding: 0.5em;
 	max-width: 50vw;
+	min-width: min-content;
 `
 const CardHeader = styled.div`
 	display: flex;
-	align-items: center;
 	justify-content: space-evenly;
 	max-width: 90%;
 	margin: 0 auto;
@@ -55,12 +55,10 @@ const Name = styled.h1`
 `
 const HPEnergy = styled.div`
 	display: flex;
-	flex-direction: row;
-	/* justify-content: center; */
+	place-items: flex-end;
 	margin-left: auto;
-	align-items: center;
 	gap: 0.5em;
-	padding: 0;
+	padding-left: 1em;
 `
 const HP = styled.h2`
 	color: #ab2a31;
@@ -68,11 +66,10 @@ const HP = styled.h2`
 	margin: 0;
 `
 const Energy = styled.img`
-	max-height: 20px;
-	max-width: 20px;
+	max-width: 1.5em;
 `
 const Image = styled.img`
-	max-width: auto;
+	padding: 2em;
 `
 
 const BorderGradientContainer = styled.div`
@@ -150,7 +147,7 @@ const CatalogNumber = styled.div`
 const PokemonInfo = ({ pokemonData }) => {
 	const [randomNum, setRandomNum] = useState(0)
 	const [moves, setMoves] = useState([])
-	const parsedMoves = []
+
 	let { id } = useParams()
 	id -= 1
 	let pokemon = pokemonData[id]
@@ -175,56 +172,52 @@ const PokemonInfo = ({ pokemonData }) => {
 		steel: steel,
 	}
 
-	const parseFlavorText = async () => {
-		try {
-			await pokemon.flavorTextEntries.filter(entry => {
-				return Object.keys(pokemon.flavorTextEntries).forEach(key =>
-					pokemon.flavorTextEntries[key] === undefined
-						? delete pokemon.flavorTextEntries[key]
-						: {}
-				)
-			})
-			let random = Math.floor(Math.random() * 10)
-			setRandomNum(random)
-		} catch (e) {
-			console.log(e)
-		}
-	}
-
-	const parseMoves = async () => {
-		try {
-			pokemon.moves.forEach(move => {
-				parsedMoves.push(move.move.name)
-				setMoves(parsedMoves)
-			})
-		} catch (e) {
-			console.log(e)
-		}
-	}
-
 	useEffect(() => {
+		const parsedMoves = []
+		const parseFlavorText = async () => {
+			try {
+				await pokemon.flavorTextEntries.filter((entry) => {
+					return Object.keys(pokemon.flavorTextEntries).forEach((key) =>
+						pokemon.flavorTextEntries[key] === undefined
+							? delete pokemon.flavorTextEntries[key]
+							: {}
+					)
+				})
+				let random = Math.floor(Math.random() * 10)
+				setRandomNum(random)
+			} catch (e) {
+				console.log(e)
+			}
+		}
+
+		const parseMoves = async () => {
+			try {
+				pokemon.moves.forEach((move) => {
+					parsedMoves.push(move.move.name)
+					setMoves(parsedMoves)
+				})
+			} catch (e) {
+				console.log(e)
+			}
+		}
 		parseFlavorText()
 		parseMoves()
-	}, [])
+	}, [pokemon.flavorTextEntries, pokemon.moves])
 
 	return (
 		<>
 			{pokemon && (
-				<Card className={Types[pokemon.typeClass]}>
+				<Card key={pokemon.id} className={Types[pokemon.typeClass]}>
 					<StyledLink to={"/"}>
 						<CardHeader>
 							<CardHeaderLeft>
 								<Stage>Basic Pokemon</Stage>
 								<Name>{pokemon.name}</Name>
-								{/* <Name>{pokemon.id}</Name> */}
 							</CardHeaderLeft>
 							<HPEnergy>
 								<HP>{pokemon.stats[0].baseStat}</HP>
 								{pokemon.energyType && (
-									<Energy
-										src={imageMap[pokemon.energyType]}
-										alt=''
-									/>
+									<Energy src={imageMap[pokemon.energyType]} alt='' />
 								)}
 							</HPEnergy>
 						</CardHeader>
@@ -233,8 +226,8 @@ const PokemonInfo = ({ pokemonData }) => {
 						</BorderGradientContainer>
 						<Banner>
 							<p>
-								{pokemon.type} Pokemon. Height: {pokemon.height}
-								, Weight: {pokemon.weight}
+								{pokemon.type} Pokemon. Height: {pokemon.height}, Weight:{" "}
+								{pokemon.weight}
 							</p>
 						</Banner>
 						<div>
@@ -247,7 +240,7 @@ const PokemonInfo = ({ pokemonData }) => {
 							<Label>Stats</Label>
 						</div>
 						<Stats>
-							{pokemon.stats.map(stat => {
+							{pokemon.stats.map((stat) => {
 								return (
 									<div key={stat.statName}>
 										<StatName>{stat.statName}:</StatName>
@@ -261,9 +254,9 @@ const PokemonInfo = ({ pokemonData }) => {
 						</div>
 						<Moves>
 							{moves &&
-								moves.map(move => {
+								moves.map((move) => {
 									return (
-										<div key={move.name}>
+										<div key={move}>
 											<MoveName>{move}</MoveName>
 										</div>
 									)
@@ -272,8 +265,7 @@ const PokemonInfo = ({ pokemonData }) => {
 						<TextSummary>
 							<TextSummaryContainer>
 								{pokemon.flavorTextEntries[randomNum] &&
-									pokemon.flavorTextEntries[randomNum]
-										.flavor_text}
+									pokemon.flavorTextEntries[randomNum].flavor_text}
 							</TextSummaryContainer>
 						</TextSummary>
 						<CatalogNumber>

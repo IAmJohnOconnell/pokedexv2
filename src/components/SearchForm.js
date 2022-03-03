@@ -11,7 +11,6 @@ const StyledForm = styled.form`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-
 `
 
 const SearchField = styled.input`
@@ -23,7 +22,7 @@ const SearchField = styled.input`
 	padding: 0.5em 0;
 	text-indent: 0.5em;
 	font-weight: bold;
-	
+
 	&:focus {
 		border: 3px solid #818181;
 	}
@@ -36,47 +35,38 @@ const SearchButton = styled.button`
 	border: none;
 	border-radius: 5px;
 	font-weight: bold;
-	letter-spacing: 1px;
-	color: ${props => props.theme.color};
+	color: ${(props) => props.theme.color};
+	transition: all ease-in-out 0.1s;
 
 	&:hover {
-		box-shadow: 0px 3px 3px black;
-		background-color: #1b82b1;
+		box-shadow: 1px 2px 6px black;
 	}
-
 `
 
 const ResetButton = styled(SearchButton)`
 	background-color: #4dad5b;
-	transition: all ease-in-out 0.1s;
-
-
-	&:hover {
-		background-color: #369143;
-	}
 `
 
-const SearchForm = ({ filterPokemon }) => {
+const SearchForm = ({ pokemonData, setFilteredPokemon }) => {
 	const [input, setInput] = useState("")
 
-	const onInputChange = e => {
-		setInput(e.target.value.toLowerCase())
-	}
-
-	const submitForm = e => {
-		if (input === "") {
-			e.preventDefault()
-			alert("Whoops! Forgot you forgot something!")
+	const filterPokemon = async (e) => {
+		if (e.target.value !== "") {
+			setInput(e.target.value.toLowerCase())
+			let filteredArr = await pokemonData.filter((pokemon) =>
+				pokemon.name.includes(input)
+			)
+			setFilteredPokemon(filteredArr)
+			console.log(filteredArr)
 		} else {
-			e.preventDefault()
-			filterPokemon(input)
+			setFilteredPokemon("")
 			setInput("")
 		}
 	}
 
-	const resetForm = e => {
+	const resetForm = (e) => {
 		e.preventDefault()
-		filterPokemon(input)
+		setFilteredPokemon(pokemonData)
 		setInput("")
 	}
 
@@ -86,11 +76,8 @@ const SearchForm = ({ filterPokemon }) => {
 				type='text'
 				placeholder='Search...'
 				value={input}
-				onChange={onInputChange}
+				onChange={filterPokemon}
 			/>
-			<SearchButton type='submit' onClick={submitForm}>
-				Search
-			</SearchButton>
 			<ResetButton type='button' onClick={resetForm}>
 				<StyledLink to='/'>Reset</StyledLink>
 			</ResetButton>

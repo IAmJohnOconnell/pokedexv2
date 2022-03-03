@@ -4,8 +4,8 @@ import styled from "styled-components"
 const StyledSwitch = styled.label`
 	position: relative;
 	display: flex;
-	width: 60px;
-	height: 34px;
+	width: 30px;
+	height: 17px;
 	& input {
 		opacity: 0;
 		width: 0;
@@ -20,7 +20,7 @@ const Slider = styled.span`
 	left: 0;
 	right: 0;
 	bottom: 0;
-	background-color: #ccc;
+	background-color: #bbb;
 	transition: 0.4s;
 	border-radius: 34px;
 	transition: 0.4s;
@@ -28,26 +28,23 @@ const Slider = styled.span`
 	&:before {
 		position: absolute;
 		content: "";
-		height: 26px;
-		width: 26px;
-		left: 4px;
-		bottom: 4px;
-		background-color: white;
+		height: 13px;
+		width: 13px;
+		left: 2px;
+		bottom: 2px;
+		background-color: #fefefe;
 		border-radius: 50%;
 		transition: 0.4s;
 	}
 `
 const Box = styled.input`
 	:checked + ${Slider}:before {
-		transform: translateX(26px);
+		transform: translateX(13px);
 		transition: 0.4s;
-		background-color: darkgrey;
-		border: 1px solid white;
+		background-color: #313131;
 	}
 
 	:checked + ${Slider} {
-		background-color: white;
-		border: 1px solid darkgrey;
 		transition: 0.4s;
 	}
 `

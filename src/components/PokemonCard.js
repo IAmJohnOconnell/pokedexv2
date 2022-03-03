@@ -1,7 +1,7 @@
-import React from "react"
-import Types from "./styles/Types.module.css"
-import { Link } from "react-router-dom"
-import styled from "styled-components"
+import React from "react";
+import Types from "./styles/Types.module.css";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
 
 const Card = styled.div`
 	text-align: center;
@@ -22,12 +22,9 @@ const Card = styled.div`
 		transform: translateY(-2%);
 		transition: all 0.2s ease-in-out;
 
-
-
 		& img {
-			transform:scale3d(1.2,1.2,1.2);
+			transform: scale3d(1.2, 1.2, 1.2);
 			transition: all 0.25s ease-in-out;
-
 		}
 	}
 
@@ -53,20 +50,19 @@ const Card = styled.div`
 	& img {
 		height: 128px;
 		width: 128px;
-		padding:1rem;
+		padding: 1rem;
 		transition: all 0.2s ease-in-out;
-
 	}
-`
+`;
 
 const Name = styled.h2`
 	font-family: sans-serif;
-`
+`;
 
 const StyledLink = styled(Link)`
-	link-style: none;
+	/* link-style: none; */
 	text-decoration: none;
-`
+`;
 
 const PokemonCard = ({ pokemon }) => {
 	return (
@@ -83,7 +79,7 @@ const PokemonCard = ({ pokemon }) => {
 				</div>
 			</Card>
 		</StyledLink>
-	)
-}
+	);
+};
 
-export default PokemonCard
+export default PokemonCard;

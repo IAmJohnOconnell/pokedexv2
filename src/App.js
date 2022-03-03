@@ -6,27 +6,17 @@ import PokemonInfo from "./pages/PokemonInfo"
 import Navigation from "./components/Navigation"
 import SearchForm from "./components/SearchForm"
 import Hero from "./components/Hero"
-import Switch from "./components/Switch"
 import axios from "axios"
 import { ThemeProvider } from "styled-components"
 import { lightTheme, darkTheme } from "./components/Themes"
 import { GlobalStyle } from "./components/Themes"
-import Wrapper from "./components/Wrapper"
+import Loader from "./components/Loader"
 
 export default function App() {
 	const [theme, setTheme] = useState("light")
 	const [pokemonData, setPokemonData] = useState("")
 	const [filteredPokemon, setFilteredPokemon] = useState([])
-	const filterPokemon = async input => {
-		try {
-			let filteredArr = await pokemonData.filter(pokemon => {
-				return pokemon.name.includes(input)
-			})
-			setFilteredPokemon(filteredArr)
-		} catch (e) {
-			console.log(e)
-		}
-	}
+	const [isLoading, setIsLoading] = useState(true)
 
 	const themeToggler = () => {
 		theme === "light" ? setTheme("dark") : setTheme("light")
@@ -34,13 +24,11 @@ export default function App() {
 	}
 
 	const getPokemon = async () => {
-		const origional = 151
+		const original = 151
 		let pokemons = []
 
-		for (let id = 1; id <= origional; id++) {
-			let response = await axios.get(
-				`https://pokeapi.co/api/v2/pokemon/${id}`
-			)
+		for (let id = 1; id <= original; id++) {
+			let response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`)
 			let flavorTextResponse = await axios.get(
 				`https://pokeapi.co/api/v2/pokemon-species/${id}`
 			)
@@ -48,7 +36,7 @@ export default function App() {
 			let pokemonSpecies = flavorTextResponse.data
 
 			const pokemonFlavorText = pokemonSpecies.flavor_text_entries.map(
-				flavorText => {
+				(flavorText) => {
 					if (flavorText.language.name === "en") {
 						return flavorText
 					}
@@ -56,20 +44,18 @@ export default function App() {
 				}
 			)
 
-			const pokemonType = pokemon.types
-				.map(type => type.type.name)
-				.join(", ")
+			const pokemonType = pokemon.types.map((type) => type.type.name).join(", ")
 
 			const pokemonEnergyType = pokemon.types[0].type.name
 			const pokemonTypeClass = pokemon.types
-				.map(type => type.type.name)
+				.map((type) => type.type.name)
 				.join("-")
 
 			const pokemonAbilities = pokemon.abilities
-				.map(ability => ability.ability.name)
+				.map((ability) => ability.ability.name)
 				.join(", ")
 
-			const pokemonStats = pokemon.stats.map(data => ({
+			const pokemonStats = pokemon.stats.map((data) => ({
 				statName: data.stat.name,
 				baseStat: data.base_stat,
 			}))
@@ -84,6 +70,8 @@ export default function App() {
 				name: pokemon.name,
 				url: `/pokemon/${id}`,
 				image: `${pokemon.sprites.other["dream_world"].front_default}`,
+				imageAnimated: `${pokemon.sprites.versions["generation-v"]["black-white"].animated.front_default}`,
+				evolutionChain: pokemonSpecies.evolution_chain.url,
 				type: pokemonType,
 				typeClass: pokemonTypeClass,
 				energyType: pokemonEnergyType,
@@ -100,6 +88,7 @@ export default function App() {
 			pokemons.push(formattedPokemon)
 		}
 		setPokemonData(pokemons)
+		setIsLoading(false)
 	}
 
 	useEffect(() => {
@@ -112,29 +101,37 @@ export default function App() {
 				<Router>
 					<GlobalStyle />
 					<Hero />
-					<Navigation />
-					<SearchForm filterPokemon={filterPokemon} />
-					<Wrapper>
-						<Switch themeToggler={themeToggler} />
-					</Wrapper>
-					<Routes>
-						<Route
-							path='/'
-							element={
-								<PokeDex
-									pokemonData={pokemonData}
-									getPokemon={getPokemon}
-									filteredPokemon={filteredPokemon}
+					{!isLoading ? (
+						<>
+							<Navigation themeToggler={themeToggler} />
+							<SearchForm
+								pokemonData={pokemonData}
+								setPokemonData={setPokemonData}
+								setFilteredPokemon={setFilteredPokemon}
+								getPokemon={getPokemon}
+							/>
+							<Routes>
+								<Route
+									path='/'
+									element={
+										<PokeDex
+											pokemonData={pokemonData}
+											getPokemon={getPokemon}
+											filteredPokemon={filteredPokemon}
+										/>
+									}
 								/>
-							}
-						/>
-						<Route path='/about' element={<About />} />
+								<Route path='/about' element={<About />} />
 
-						<Route
-							path='/pokemon/:id'
-							element={<PokemonInfo pokemonData={pokemonData} />}
-						/>
-					</Routes>
+								<Route
+									path='/pokemon/:id'
+									element={<PokemonInfo pokemonData={pokemonData} />}
+								/>
+							</Routes>
+						</>
+					) : (
+						<Loader />
+					)}
 				</Router>
 			</div>
 		</ThemeProvider>
