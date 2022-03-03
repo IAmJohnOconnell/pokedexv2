@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
-import About from "./pages/About"
 import PokeDex from "./pages/PokeDex"
 import PokemonInfo from "./pages/PokemonInfo"
 import Navigation from "./components/Navigation"
@@ -121,7 +120,6 @@ export default function App() {
 										/>
 									}
 								/>
-								<Route path='/about' element={<About />} />
 
 								<Route
 									path='/pokemon/:id'
